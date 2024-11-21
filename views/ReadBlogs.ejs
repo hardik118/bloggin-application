@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("./partials/head") %>
+    <style>
+           .center-img {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 300px; /* Adjust height as needed */
+        }
+    </style>
+    <title>homepage</title>
+   
+</head>
+<body>
+    
+    <%- include("./partials/nav") %>
+<div class="container mt-5">
+<h2 class="text-center mt-5"><%= blog.Title%></h2>
+<div class="center-img mt-3">
+    <img src="<%= blog.coverImg %>" width="600px" height="300px">
+
+</div>
+<pre class="text-center mt-4"><%= blog.body %> </pre>
+
+</div>
+<div class="container mt-4">
+    
+<pre>    <img src="<%= blog.Created_by.ImgProfileUrl %>" alt="profilepic" width="50px"> <%=  blog.Created_by.Fullname%></pre>
+</div>
+<div class="container mt-3">
+    <h4 class="text-muted">Comment (<%= comments.length %>) </h4>
+
+</div>
+<% if (locals.user) { %>
+    <div class="container mt-3">
+ <form action="/blog/comment/<%= blog._id %>" method="post">
+    <div class="container mt-3"></div>
+    
+
+        <input type="text" name="content" class="form-control" placeholder="Enter your commnet">
+        <button class="btn btn-md btn-primary mt-2">Add</button>
+
+    </div>
+    
+ </form>
+</div>
+<% } %>
+<div class="container mt-3">
+    <% comments.forEach(comment => { %>
+      <img src="<%= comment.Created_by.ImgProfileUrl %>" alt="user" width="50px" ><%= comment.Created_by.Fullname %>
+      <pre><%= comment.comment %></pre>
+    <% }) %>
+</div>
+
+    
+    <%- include("./partials/script") %>
+</body>
+</html>
